@@ -4,6 +4,7 @@ import {
   useDeleteContactByIdMutation,
   useGetContactsQuery,
 } from "../../services/api";
+import Loader from "../Loader/Loader";
 
 const getVisibleContacts = (contacts, filter) => {
   const normalizedFilter = filter.toLowerCase().trim();
@@ -24,7 +25,7 @@ export const Contact = () => {
       {error ? (
         <>Oh no, there was an error</>
       ) : isLoading ? (
-        <>Loading...</>
+        <Loader />
       ) : data ? (
         <>
           {getVisibleContacts(data, filter).map(({ id, name, phone }) => (
