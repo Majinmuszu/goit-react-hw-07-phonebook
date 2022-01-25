@@ -8,7 +8,6 @@ export const Filter = () => {
   const dispatch = useDispatch();
   const onFilter = (e) => {
     dispatch(filterContacts(e.target.value));
-    console.log(filter)
   };
   return (
     <div>
