@@ -1,4 +1,3 @@
-import { nanoid } from "@reduxjs/toolkit";
 import React from "react";
 // import { useDispatch, useSelector } from "react-redux";
 // import { addContact } from "../../redux/actions";
@@ -24,8 +23,8 @@ export const ContactForm = () => {
   //   dispatch(addContact({ name, number }));
   //   form.reset();
   // };
-  const [submitForm, results] = usePostContactMutation();
-  console.log(results);
+  const [submitForm] = usePostContactMutation();
+  // console.log(results);
 
   return (
     <form

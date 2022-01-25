@@ -1,29 +1,24 @@
 import React from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { deleteContact } from "../../redux/actions";
-import { useDeleteContactByIdMutation, useGetContactsQuery } from "../../services/api";
-// import { saveToLocalStore } from "../../utils/localStorage";
+import { useSelector } from "react-redux";
+import {
+  useDeleteContactByIdMutation,
+  useGetContactsQuery,
+} from "../../services/api";
 
-// const getVisibleContacts = (contacts, filter) => {
-//   const normalizedFilter = filter.toLowerCase().trim();
+const getVisibleContacts = (contacts, filter) => {
+  const normalizedFilter = filter.toLowerCase().trim();
 
-//   return contacts.filter(
-//     (contact) =>
-//       contact.name.toLowerCase().includes(normalizedFilter) ||
-//       contact.number.includes(filter)
-//   );
-// };
+  return contacts.filter(
+    (contact) =>
+      contact.name.toLowerCase().includes(normalizedFilter) ||
+      contact.phone.includes(filter)
+  );
+};
 export const Contact = () => {
   const { data, error, isLoading } = useGetContactsQuery();
-  console.log(data, error, isLoading);
-  const [deleteContact, results] = useDeleteContactByIdMutation();
-  console.log(results)
-  // const contacts = useSelector(({ contacts, filter }) =>
-  //   getVisibleContacts(contacts, filter)
-  // );
-  // const dispatch = useDispatch();
-  // saveToLocalStore("CONTACTS", contacts);
-
+  // console.log(data, error, isLoading);
+  const [deleteContact] = useDeleteContactByIdMutation();
+  const filter = useSelector((state) => state.filter);
   return (
     <>
       {error ? (
@@ -32,10 +27,12 @@ export const Contact = () => {
         <>Loading...</>
       ) : data ? (
         <>
-          {data.map(({ id, name, phone }) => (
+          {getVisibleContacts(data, filter).map(({ id, name, phone }) => (
             <li key={id}>
               {name} : {phone}
-              <button type="button" onClick={()=>deleteContact(id)}>Delete</button>
+              <button type="button" onClick={() => deleteContact(id)}>
+                Delete
+              </button>
             </li>
           ))}
         </>
